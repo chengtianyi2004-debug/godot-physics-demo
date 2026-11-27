@@ -1,0 +1,220 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/lab.gd" id="1_lab"]
+[ext_resource type="Script" path="res://scripts/board.gd" id="2_board"]
+[ext_resource type="Script" path="res://scripts/animated_cube.gd" id="3_cube"]
+[ext_resource type="Script" path="res://scripts/part_art.gd" id="4_art"]
+[ext_resource type="Script" path="res://scripts/icon_button.gd" id="5_button"]
+
+[sub_resource type="PhysicsMaterial" id="FloorMaterial"]
+friction = 0.72
+
+[sub_resource type="PhysicsMaterial" id="RubberMaterial"]
+friction = 0.26
+bounce = 0.83
+
+[sub_resource type="PhysicsMaterial" id="HeavyMaterial"]
+friction = 0.8
+bounce = 0.08
+
+[sub_resource type="PhysicsMaterial" id="LauncherMaterial"]
+friction = 0.23
+bounce = 0.12
+
+[sub_resource type="PhysicsMaterial" id="CrateMaterial"]
+friction = 0.56
+bounce = 0.05
+
+[sub_resource type="RectangleShape2D" id="FloorShape"]
+size = Vector2(750, 30)
+
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(12, 450)
+
+[sub_resource type="CircleShape2D" id="DropShape"]
+radius = 26.0
+
+[sub_resource type="CircleShape2D" id="LaunchShape"]
+radius = 21.0
+
+[sub_resource type="RectangleShape2D" id="CrateShape"]
+size = Vector2(42, 42)
+
+[node name="Lab" type="Node2D"]
+script = ExtResource("1_lab")
+
+[node name="Board" type="Node2D" parent="."]
+script = ExtResource("2_board")
+
+[node name="AnimatedCube" type="Node2D" parent="."]
+position = Vector2(221, 303)
+script = ExtResource("3_cube")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(825, 523)
+physics_material_override = SubResource("FloorMaterial")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("FloorShape")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(444, 283)
+physics_material_override = SubResource("FloorMaterial")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("WallShape")
+
+[node name="Divider" type="StaticBody2D" parent="."]
+position = Vector2(756, 283)
+physics_material_override = SubResource("FloorMaterial")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Divider"]
+shape = SubResource("WallShape")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(1206, 283)
+physics_material_override = SubResource("FloorMaterial")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("WallShape")
+
+[node name="RubberBall" type="RigidBody2D" parent="."]
+position = Vector2(530, 190)
+mass = 1.0
+physics_material_override = SubResource("RubberMaterial")
+freeze = true
+continuous_cd = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RubberBall"]
+shape = SubResource("DropShape")
+
+[node name="Art" type="Node2D" parent="RubberBall"]
+script = ExtResource("4_art")
+radius = 26.0
+color = Color(0.24, 0.57, 0.44, 1)
+
+[node name="HeavyBall" type="RigidBody2D" parent="."]
+position = Vector2(673, 190)
+mass = 2.4
+physics_material_override = SubResource("HeavyMaterial")
+freeze = true
+continuous_cd = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeavyBall"]
+shape = SubResource("DropShape")
+
+[node name="Art" type="Node2D" parent="HeavyBall"]
+script = ExtResource("4_art")
+radius = 26.0
+color = Color(0.49, 0.38, 0.62, 1)
+
+[node name="LaunchBall" type="RigidBody2D" parent="."]
+position = Vector2(828, 487)
+mass = 1.1
+physics_material_override = SubResource("LauncherMaterial")
+freeze = true
+continuous_cd = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LaunchBall"]
+shape = SubResource("LaunchShape")
+
+[node name="Art" type="Node2D" parent="LaunchBall"]
+script = ExtResource("4_art")
+radius = 21.0
+color = Color(0.29, 0.49, 0.71, 1)
+
+[node name="LeftCrate" type="RigidBody2D" parent="."]
+position = Vector2(1030, 486)
+mass = 0.68
+physics_material_override = SubResource("CrateMaterial")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftCrate"]
+shape = SubResource("CrateShape")
+
+[node name="Art" type="Node2D" parent="LeftCrate"]
+script = ExtResource("4_art")
+color = Color(0.62, 0.45, 0.32, 1)
+crate = true
+
+[node name="RightCrate" type="RigidBody2D" parent="."]
+position = Vector2(1073, 486)
+mass = 0.68
+physics_material_override = SubResource("CrateMaterial")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightCrate"]
+shape = SubResource("CrateShape")
+
+[node name="Art" type="Node2D" parent="RightCrate"]
+script = ExtResource("4_art")
+color = Color(0.66, 0.49, 0.35, 1)
+crate = true
+
+[node name="TopCrate" type="RigidBody2D" parent="."]
+position = Vector2(1051.5, 443)
+mass = 0.68
+physics_material_override = SubResource("CrateMaterial")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopCrate"]
+shape = SubResource("CrateShape")
+
+[node name="Art" type="Node2D" parent="TopCrate"]
+script = ExtResource("4_art")
+color = Color(0.69, 0.52, 0.38, 1)
+crate = true
+
+[node name="Controls" type="Control" parent="."]
+layout_mode = 0
+mouse_filter = 2
+
+[node name="Animation" type="Button" parent="Controls"]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 580.0
+offset_right = 251.0
+offset_bottom = 640.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
+script = ExtResource("5_button")
+symbol = "pause"
+
+[node name="Drop" type="Button" parent="Controls"]
+layout_mode = 0
+offset_left = 722.0
+offset_top = 580.0
+offset_right = 782.0
+offset_bottom = 640.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
+script = ExtResource("5_button")
+symbol = "drop"
+
+[node name="Launch" type="Button" parent="Controls"]
+layout_mode = 0
+offset_left = 795.0
+offset_top = 580.0
+offset_right = 855.0
+offset_bottom = 640.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
+script = ExtResource("5_button")
+symbol = "launch"
+
+[node name="Reset" type="Button" parent="Controls"]
+layout_mode = 0
+offset_left = 868.0
+offset_top = 580.0
+offset_right = 928.0
+offset_bottom = 640.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
+script = ExtResource("5_button")
+symbol = "reset"
+
+[connection signal="pressed" from="Controls/Animation" to="." method="toggle_animation"]
+[connection signal="pressed" from="Controls/Drop" to="." method="drop_balls"]
+[connection signal="pressed" from="Controls/Launch" to="." method="launch"]
+[connection signal="pressed" from="Controls/Reset" to="." method="reset_lab"]
